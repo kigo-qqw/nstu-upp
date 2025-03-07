@@ -1,0 +1,29 @@
+{
+  "monorepo": true,
+  "root": "apps/nstu-upp",
+  "sourceRoot": "apps/nstu-upp/src",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/nstu-upp/tsconfig.app.json"
+  },
+  "projects": {
+    "api": {
+      "type": "application",
+      "root": "apps/api",
+      "entryFile": "main",
+      "sourceRoot": "apps/api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api/tsconfig.app.json"
+      }
+    },
+    "nstu-upp": {
+      "type": "application",
+      "root": "apps/nstu-upp",
+      "entryFile": "main",
+      "sourceRoot": "apps/nstu-upp/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/nstu-upp/tsconfig.app.json"
+      }
+    }
+  }
+}
