@@ -1,0 +1,44 @@
+<script setup lang="ts">
+import { NLayout } from "naive-ui";
+import { RouterView } from "vue-router";
+import Navbar from "~/components/Navbar/Navbar.vue";
+
+console.log("Default layout");
+
+const isFluid = true;
+</script>
+
+<template>
+  <n-layout has-sider position="absolute">
+    <!--  <Sidebar/>-->
+
+    <n-layout :native-scrollbar="false" position="static">
+      <div
+        class="main-content flex-1 bg-slate-100 dark:bg-slate-800 dark:text-white my-2 mr-2"
+      >
+        <Navbar />
+        <div
+          class="px-0 py-1 md:p-3 md:pb-15 relative md:mx-auto test"
+          :class="{ 'md-container': isFluid }"
+        >
+          <router-view v-slot="{ Component, route }">
+            <transition name="slide">
+              <component :is="Component" :key="route" />
+            </transition>
+          </router-view>
+        </div>
+      </div>
+    </n-layout>
+  </n-layout>
+</template>
+
+<style lang="scss">
+.n-layout {
+  padding: 0 4px;
+  background-color: transparent !important;
+}
+
+.test {
+  flex: auto;
+}
+</style>
