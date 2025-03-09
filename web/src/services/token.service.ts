@@ -11,7 +11,6 @@ export class TokenService {
   getLocalAccessToken() {
     const accountStore = useAccountStore();
     const { account } = storeToRefs(accountStore);
-    console.log(account);
     return account.value?.accessToken;
   }
 

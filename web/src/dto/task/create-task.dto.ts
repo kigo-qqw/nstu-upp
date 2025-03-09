@@ -4,7 +4,8 @@ export interface CreateTaskDto {
   // parentId: number; // TODO
   boardId: number;
   ownerId: number;
-  startDate: number;
-  endDate: number;
   performerIds: number[];
+  color: string;
+  plannedStartAt: Date;
+  plannedEndAt: Date;
 }

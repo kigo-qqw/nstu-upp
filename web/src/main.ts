@@ -1,14 +1,15 @@
 import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
-import { setupStore } from "./store";
+import { store } from "./store";
 import generatedRoutes from "virtual:generated-pages";
 import { setupLayouts } from "virtual:generated-layouts";
 import { createRouter, createWebHistory } from "vue-router";
+import ganttastic from "@infectoone/vue-ganttastic";
 
-import '@unocss/reset/tailwind-compat.css'
-import 'uno.css'
-import './styles/main.scss'
+import "@unocss/reset/tailwind-compat.css";
+import "uno.css";
+import "./styles/main.scss";
 
 const boostrap = async () => {
   const routes = setupLayouts(generatedRoutes);
@@ -20,11 +21,7 @@ const boostrap = async () => {
   console.log(routes);
   console.log(router);
 
-  const app = createApp(App);
-  app.use(router);
-  setupStore(app);
-
-  app.mount("#app");
+  createApp(App).use(router).use(ganttastic).use(store).mount("#app");
 };
 
 void boostrap();

@@ -4,6 +4,7 @@ import { RouterLink } from "vue-router";
 import {
   DoorArrowRight20Regular as LogoutIcon,
   Settings20Regular as SettingsIcon,
+  Person32Filled as PersonIcon,
 } from "@vicons/fluent";
 import { h } from "vue";
 
@@ -32,7 +33,7 @@ const items = [
 <template>
   <div class="flex items-center" v-bind="$attrs">
     <n-dropdown :options="items">
-      <img class="avatar" src="@/assets/images/user.jpg" alt="User Avatar" />
+      <PersonIcon class="avatar" />
     </n-dropdown>
   </div>
 </template>

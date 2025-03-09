@@ -9,25 +9,23 @@ import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
 import { storeToRefs } from "pinia";
 import { NButton } from "naive-ui";
-
 import { useProjectStore } from "~/store/project.store";
 import { useBoardStore } from "~/store/board.store";
-
-import boardService from "~/services/board.service";
-
 import CreateBoardModal from "~/components/Board/CreateBoardModal.vue";
+import InviteUserToProjectModal from "~/components/Project/InviteUserToProjectModal.vue";
+import projectService from "~/services/project.service";
 
 const props = defineProps({
   projectId: String,
 });
 const projectId = parseInt(props.projectId!);
 
+projectService.getAll();
+
 const showCreateBoardModal = ref(false);
 
 const boardStore = useBoardStore();
 const { boards, isLoading: isBoardsLoading } = storeToRefs(boardStore);
-
-boardService.getAll(projectId);
 
 const projectStore = useProjectStore();
 const { projects, isLoading: isProjectsLoading } = storeToRefs(projectStore);
@@ -45,9 +43,16 @@ const boardsOfProject = computed(() =>
 </script>
 
 <template>
-  <template v-if="isHaveCurrentProject">
+  <template
+    v-if="isHaveCurrentProject && !isBoardsLoading && !isProjectsLoading"
+  >
     <n-button @click="showCreateBoardModal = true">New</n-button>
-    <CreateBoardModal v-model:show="showCreateBoardModal" :project="currentProject!" />
+    <CreateBoardModal
+      v-model:show="showCreateBoardModal"
+      :project="currentProject!"
+    />
+
+    <InviteUserToProjectModal v-model:project="currentProject!" />
 
     <div v-if="!isProjectsLoading && !isBoardsLoading">
       <div v-for="[_, board] in boardsOfProject">
@@ -59,5 +64,5 @@ const boardsOfProject = computed(() =>
       </div>
     </div>
   </template>
-  <template v-else> Project not found </template>
+  <template v-else> Project not found</template>
 </template>

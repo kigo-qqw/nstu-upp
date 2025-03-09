@@ -12,26 +12,20 @@ import {
   NFormItem,
   NInput,
   NModal,
+  NColorPicker,
   useMessage,
 } from "naive-ui";
 import { CreateTaskDto } from "~/dto/task";
 import type { Board, User } from "~/entity";
 import SelectUser from "~/components/Task/SelectUser.vue";
 import { useUserStore, useProjectStore, useAccountStore } from "~/store";
+import { taskService } from "~/services";
 
 const taskStore = useTaskStore();
 const { isLoading } = storeToRefs(taskStore);
 
 const showCreateTaskModal = defineModel<boolean>("show", { required: true });
 const board = defineModel<Board>("board", { required: true });
-
-const rules: FormRules = {
-  projectName: {
-    required: true,
-    message: "Please input project name",
-    trigger: ["input", "blur"],
-  },
-};
 
 const accountStore = useAccountStore();
 const { account } = storeToRefs(accountStore);
@@ -44,14 +38,18 @@ const formValue = ref<CreateTaskDto>({
   description: "",
   boardId: board.value.id,
   ownerId: account.value!.userId,
-  startDate: 0,
-  endDate: 0,
   performerIds: [],
+  color: "#008800",
+  plannedStartAt: new Date(Date.now()),
+  plannedEndAt: new Date(Date.now()),
 });
 
 const formRef = ref<FormInst | null>(null);
 
-const timeRange = ref<[number, number]>([0, 0]);
+const timeRange = ref<[number, number]>([
+  formValue.value.plannedStartAt.getTime(),
+  formValue.value.plannedEndAt.getTime(),
+]);
 
 const projectStore = useProjectStore();
 const { projects } = storeToRefs(projectStore);
@@ -66,12 +64,27 @@ const performers = computed<User[]>(
 
 const message = useMessage();
 
+const rules: FormRules = {
+  title: {
+    required: true,
+    message: "Please task title",
+    trigger: ["input", "blur"],
+  },
+  description: {
+    required: true,
+    message: "Please task description",
+    trigger: ["input", "blur"],
+  },
+};
+
 const handleCreateClick = async (e: MouseEvent) => {
   e.preventDefault();
   formRef.value?.validate(async (errors) => {
     if (!errors) {
-      // const created = await taskService.create(formValue.value);
-      const created = true; // TODO: taskService
+      formValue.value.plannedStartAt = new Date(timeRange.value[0]);
+      formValue.value.plannedEndAt = new Date(timeRange.value[1]);
+
+      const created = await taskService.create(formValue.value);
       if (created) {
         message.success("Project created successfully.");
         showCreateTaskModal.value = false;
@@ -96,15 +109,23 @@ const handleCreateClick = async (e: MouseEvent) => {
       aria-modal="true"
     >
       <n-form ref="formRef" :model="formValue" :rules="rules" size="medium">
-        <n-form-item label="Title">
-          <n-input autosize v-model:value="formValue.title" />
+        <n-form-item label="Title" path="title">
+          <n-input v-model:value="formValue.title" />
         </n-form-item>
 
-        <n-form-item label="Description">
+        <n-form-item label="Description" path="description">
           <n-input
             autosize
             v-model:value="formValue.description"
             type="textarea"
+          />
+        </n-form-item>
+
+        <n-form-item label="Task color">
+          <n-color-picker
+            v-model:value="formValue.color"
+            :modes="['hex']"
+            :show-alpha="false"
           />
         </n-form-item>
 
@@ -119,7 +140,7 @@ const handleCreateClick = async (e: MouseEvent) => {
         <n-form-item label="Performers">
           <SelectUser
             multiple
-            :selected-performer-ids="formValue.performerIds"
+            v-model:selected-performer-ids="formValue.performerIds"
             :performers="performers"
           />
         </n-form-item>

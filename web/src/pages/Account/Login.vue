@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, RouterLink } from "vue-router";
 import {
   NForm,
   NFormItem,
@@ -92,6 +92,10 @@ meta:
         @click="handleLoginClick"
       >
         Login
+      </n-button>
+
+      <n-button>
+        <RouterLink to="/account/register"> Register</RouterLink>
       </n-button>
     </n-form-item>
   </n-form>

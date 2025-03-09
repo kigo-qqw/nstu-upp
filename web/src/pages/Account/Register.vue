@@ -9,7 +9,7 @@ import {
   useMessage,
 } from "naive-ui";
 import authService from "~/services/auth.service";
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { RegisterDto } from "~/dto/auth";
@@ -110,6 +110,9 @@ meta:
         @click="handleRegisterClick"
       >
         Register
+      </n-button>
+      <n-button>
+        <RouterLink to="/account/login"> Login</RouterLink>
       </n-button>
     </n-form-item>
   </n-form>

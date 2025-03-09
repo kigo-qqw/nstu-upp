@@ -8,7 +8,7 @@ export class ProjectMapper {
       id: project.id,
       name: project.name,
       owner: UserMapper.toPublicUserDto(project.owner),
-      memberIds: project.members.map((m) => m.id),
+      memberIds: project.members.map((m) => m.user.id),
       boardIds: project.boards.map((b) => b.id),
     };
   }

@@ -2,10 +2,13 @@ export interface Task {
   id: number;
   title: string;
   description: string;
-  parentId: number;
+  parentId?: number;
   boardId: number;
   ownerId: number;
-  startDate: number;
-  endDate: number;
   performerIds: number[];
+  color: string;
+  plannedStartAt: Date;
+  plannedEndAt: Date;
+  actuallyStartAt?: Date;
+  actuallyEndAt?: Date;
 }

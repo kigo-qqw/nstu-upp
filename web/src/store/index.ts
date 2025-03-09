@@ -1,4 +1,3 @@
-import type { App } from "vue";
 import { createPinia } from "pinia";
 
 import { useAccountStore } from "~/store/account.store";
@@ -7,12 +6,10 @@ import { useLayoutStore } from "~/store/layout.store";
 import { useProjectStore } from "~/store/project.store";
 import { useUserStore } from "~/store/user.store";
 import { useTaskStore } from "~/store/task.store";
+import { useProjectPermissionStore } from "~/store/project-permission.store";
 
 const store = createPinia();
 
-export const setupStore = (app: App<Element>) => {
-  app.use(store);
-};
 export {
   store,
   useAccountStore,
@@ -21,4 +18,5 @@ export {
   useProjectStore,
   useUserStore,
   useTaskStore,
+  useProjectPermissionStore,
 };

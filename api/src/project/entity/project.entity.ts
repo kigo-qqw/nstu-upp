@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../../user/entity/user.entity';
 import { Member } from '../../member/entity/member.entity';
 import { BaseEntity } from '../../common/entity/base.entity';
@@ -13,8 +13,10 @@ export class Project extends BaseEntity {
   owner: User;
 
   @OneToMany(() => Member, (member) => member.project, { cascade: true })
+  // @JoinColumn()
   members: Member[];
 
   @OneToMany(() => Board, (board) => board.project, { cascade: true })
+  // @JoinColumn()
   boards: Board[];
 }

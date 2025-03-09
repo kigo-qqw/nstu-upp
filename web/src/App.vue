@@ -15,8 +15,8 @@ const layout = useLayoutStore();
 
 <template>
   <n-config-provider :theme="layout.isDark ? darkTheme : lightTheme">
-    <n-notification-provider>
-      <n-message-provider>
+    <n-notification-provider placement="bottom-right">
+      <n-message-provider placement="bottom-right">
         <n-dialog-provider>
           <router-view />
         </n-dialog-provider>
@@ -24,5 +24,3 @@ const layout = useLayoutStore();
     </n-notification-provider>
   </n-config-provider>
 </template>
-
-<style scoped></style>

@@ -1,8 +1,13 @@
 import { ApiService } from "~/services/api.service";
 import { useProjectStore } from "~/store/project.store";
 import { storeToRefs } from "pinia";
-import type { ProjectDto, CreateProjectDto } from "~/dto/project";
+import type {
+  ProjectDto,
+  CreateProjectDto,
+  InviteUserDto,
+} from "~/dto/project";
 import userService from "./user.service";
+import projectPermissionService from "./project-permission.service";
 import boardService from "./board.service";
 import { Project } from "~/entity";
 
@@ -15,12 +20,12 @@ export class ProjectService {
 
     setProject(project.id, project);
 
-    console.log("project", project);
-
     return (
       (await userService.getById(project.ownerId)) &&
       project.memberIds.every(
-        async (memberId) => await userService.getById(memberId),
+        async (memberId) =>
+          (await userService.getById(memberId)) &&
+          (await projectPermissionService.get(memberId, project.id)),
       ) &&
       project.boardIds.every(async (boardId) => await boardService.get(boardId))
     );
@@ -42,6 +47,7 @@ export class ProjectService {
         ownerId: response.owner.id,
       });
     } catch (e) {
+      console.log(e);
       return false;
     } finally {
       isLoading.value = false;
@@ -54,13 +60,14 @@ export class ProjectService {
 
     isLoading.value = true;
     try {
-      const response = await apiService.get<ProjectDto>("", { id });
+      const response = await apiService.get<ProjectDto>(`${id}`);
 
       return await this.storeProject({
         ...response,
         ownerId: response.owner.id,
       });
     } catch (e) {
+      console.log(e);
       return false;
     } finally {
       isLoading.value = false;
@@ -83,10 +90,29 @@ export class ProjectService {
           }),
       );
     } catch (e) {
+      console.error(e);
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  async invite(inviteUserDto: InviteUserDto) {
+    const projectStore = useProjectStore();
+    const { isLoading } = storeToRefs(projectStore);
+
+    isLoading.value = true;
+    try {
+      const response = await apiService.post<InviteUserDto, boolean>(
+        "invite",
+        inviteUserDto,
+      );
+
+      return response && (await this.get(inviteUserDto.projectId));
+    } catch (e) {
       console.log(e);
       return false;
     } finally {
-      console.log("isLoading.value = false");
       isLoading.value = false;
     }
   }

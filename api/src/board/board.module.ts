@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { BoardController } from './board.controller';
 import { BoardService } from './board.service';
 import { Board } from './entity/board.entity';
@@ -13,6 +13,7 @@ import { MemberModule } from '../member/member.module';
     MemberModule,
   ],
   controllers: [BoardController],
-  providers: [BoardService],
+  providers: [BoardService, Logger],
+  exports: [BoardService],
 })
 export class BoardModule {}

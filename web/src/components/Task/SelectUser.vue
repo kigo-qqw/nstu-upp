@@ -9,7 +9,7 @@ const selectedPerformersIds = defineModel<number[]>("selected-performer-ids", {
 });
 
 const performers = defineModel<User[]>("performers", { required: true });
-const props = defineProps<{ multiple: boolean }>();
+const props = defineProps<{ multiple?: boolean }>();
 
 console.log("performers.value", performers.value);
 

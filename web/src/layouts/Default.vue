@@ -2,15 +2,19 @@
 import { NLayout } from "naive-ui";
 import { RouterView } from "vue-router";
 import Navbar from "~/components/Navbar/Navbar.vue";
+import Sidebar from "~/components/Sidebar/Sidebar.vue";
+import {projectService} from "~/services";
 
 console.log("Default layout");
 
 const isFluid = true;
+
+projectService.getAll();
 </script>
 
 <template>
-  <n-layout has-sider position="absolute">
-    <!--  <Sidebar/>-->
+  <n-layout has-sider position="absolute" sider-placement="left">
+    <Sidebar />
 
     <n-layout :native-scrollbar="false" position="static">
       <div
@@ -18,13 +22,11 @@ const isFluid = true;
       >
         <Navbar />
         <div
-          class="px-0 py-1 md:p-3 md:pb-15 relative md:mx-auto test"
-          :class="{ 'md-container': isFluid }"
+          class="px-0 py-1 md:p-3 md:pb-15 relative md:mx-auto"
+          :class="{ 'md-container': !isFluid }"
         >
           <router-view v-slot="{ Component, route }">
-            <transition name="slide">
-              <component :is="Component" :key="route" />
-            </transition>
+            <component :is="Component" :key="route" />
           </router-view>
         </div>
       </div>
@@ -36,9 +38,5 @@ const isFluid = true;
 .n-layout {
   padding: 0 4px;
   background-color: transparent !important;
-}
-
-.test {
-  flex: auto;
 }
 </style>

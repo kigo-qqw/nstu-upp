@@ -1,6 +1,6 @@
-import { IsInt } from 'class-validator';
+import { IsEmail, IsInt, IsNotEmpty } from 'class-validator';
 
 export class InviteUserDto {
-  @IsInt() userId: number;
-  @IsInt() projectId: number;
+  @IsInt() @IsNotEmpty() projectId: number;
+  @IsEmail() @IsNotEmpty() userEmail: string;
 }

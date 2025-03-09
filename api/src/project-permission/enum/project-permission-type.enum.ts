@@ -1,0 +1,5 @@
+export enum ProjectPermissionType {
+  CREATE_BOARD = 'CREATE_BOARD',
+  INVITE_USER = 'INVITE_USER',
+  MANAGE_PERMISSIONS = 'MANAGE_PERMISSIONS',
+}

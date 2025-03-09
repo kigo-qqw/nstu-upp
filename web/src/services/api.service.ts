@@ -68,4 +68,21 @@ export class ApiService {
 
     return response.data as Res;
   }
+
+  async put<Req, Res>(url: string, data: Req): Promise<Res> {
+    console.log(
+      `[API Service] PUT ${this.apiBaseUrl}/${url} data=${JSON.stringify(data)}}`,
+    );
+
+    const response = await this.httpClient.put<Res>(
+      `${this.apiBaseUrl}/${url}`,
+      data,
+    );
+
+    console.log(
+      `[API Service] PUT ${this.apiBaseUrl}/${url} response=${JSON.stringify(response)}`,
+    );
+
+    return response.data as Res;
+  }
 }
