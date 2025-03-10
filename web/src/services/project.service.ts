@@ -10,8 +10,9 @@ import userService from "./user.service";
 import projectPermissionService from "./project-permission.service";
 import boardService from "./board.service";
 import { Project } from "~/entity";
+import { SERVER_URL } from "~/constants";
 
-const apiService = new ApiService("project", "http://localhost:3000"); // TODO: env??
+const apiService = new ApiService("project", SERVER_URL);
 
 export class ProjectService {
   private async storeProject(project: Project) {

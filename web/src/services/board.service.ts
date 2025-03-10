@@ -4,8 +4,9 @@ import type { CreateBoardDto, BoardDto } from "~/dto/board";
 import { useBoardStore } from "~/store";
 import { Board } from "~/entity";
 import taskService from "~/services/task.service";
+import { SERVER_URL } from "~/constants";
 
-const apiService = new ApiService("board", "http://localhost:3000"); // TODO: env??
+const apiService = new ApiService("board", SERVER_URL);
 
 export class BoardService {
   private async storeBoard(board: Board) {

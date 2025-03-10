@@ -3,8 +3,9 @@ import { CreateTaskDto, TaskDto, UpdateTaskDto } from "~/dto/task";
 import { useTaskStore } from "~/store";
 import { storeToRefs } from "pinia";
 import { Task } from "~/entity";
+import { SERVER_URL } from "~/constants";
 
-const apiService = new ApiService("task", "http://localhost:3000"); // TODO: env??
+const apiService = new ApiService("task", SERVER_URL);
 
 export class TaskService {
   private async storeTask(taskDto: TaskDto) {

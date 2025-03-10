@@ -3,8 +3,9 @@ import { storeToRefs } from "pinia";
 import { ApiService } from "~/services/api.service";
 import { useUserStore } from "~/store";
 import type { UserDto } from "~/dto/auth";
+import { SERVER_URL } from "~/constants";
 
-const apiService = new ApiService("user", "http://localhost:3000"); // TODO: env??
+const apiService = new ApiService("user", SERVER_URL);
 
 export class UserService {
   async getById(id: number) {

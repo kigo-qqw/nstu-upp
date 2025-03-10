@@ -3,11 +3,9 @@ import { useProjectPermissionStore } from "~/store";
 import { storeToRefs } from "pinia";
 import type { ProjectPermissionDto } from "~/dto/project-permission";
 import { ProjectPermission } from "~/entity";
+import { SERVER_URL } from "~/constants";
 
-const apiService = new ApiService(
-  "project-permission",
-  "http://localhost:3000",
-); // TODO: env??
+const apiService = new ApiService("project-permission", SERVER_URL);
 
 export class ProjectPermissionService {
   private async storeProjectPermission(permission: ProjectPermission) {

@@ -7,8 +7,9 @@ import type {
 import { storeToRefs } from "pinia";
 import { useAccountStore } from "~/store/account.store";
 import { useUserStore } from "~/store/user.store";
+import { SERVER_URL } from "~/constants";
 
-const apiService = new ApiService("auth", "http://localhost:3000"); // TODO: env??
+const apiService = new ApiService("auth", SERVER_URL);
 
 export class AuthService {
   async login(authCredentialsDto: AuthCredentialsDto): Promise<boolean> {
