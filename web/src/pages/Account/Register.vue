@@ -3,6 +3,7 @@ import {
   FormInst,
   FormRules,
   NButton,
+  NCard,
   NForm,
   NFormItem,
   NInput,
@@ -79,41 +80,50 @@ meta:
 </route>
 
 <template>
-  <n-form
-    ref="formRef"
-    :label-width="80"
-    :model="formValue"
-    :rules="rules"
+  <n-card
+    style="margin: auto; width: 50%"
+    title="Login"
+    :bordered="true"
     size="medium"
+    role="dialog"
+    aria-modal="true"
   >
-    <n-form-item label="Name" path="name">
-      <n-input v-model:value="formValue.name" placeholder="Username" />
-    </n-form-item>
+    <n-form
+      ref="formRef"
+      :label-width="80"
+      :model="formValue"
+      :rules="rules"
+      size="medium"
+    >
+      <n-form-item label="Name" path="name">
+        <n-input v-model:value="formValue.name" placeholder="Username" />
+      </n-form-item>
 
-    <n-form-item label="E-mail" path="email">
-      <n-input v-model:value="formValue.email" placeholder="E-mail" />
-    </n-form-item>
+      <n-form-item label="E-mail" path="email">
+        <n-input v-model:value="formValue.email" placeholder="E-mail" />
+      </n-form-item>
 
-    <n-form-item label="Password" path="password">
-      <n-input
-        type="password"
-        show-password-on="click"
-        v-model:value="formValue.password"
-        placeholder="Password"
-      />
-    </n-form-item>
+      <n-form-item label="Password" path="password">
+        <n-input
+          type="password"
+          show-password-on="click"
+          v-model:value="formValue.password"
+          placeholder="Password"
+        />
+      </n-form-item>
 
-    <n-form-item>
-      <n-button
-        attr-type="submit"
-        :loading="isLoading"
-        @click="handleRegisterClick"
-      >
-        Register
-      </n-button>
-      <n-button>
-        <RouterLink to="/account/login"> Login</RouterLink>
-      </n-button>
-    </n-form-item>
-  </n-form>
+      <n-form-item>
+        <n-button
+          attr-type="submit"
+          :loading="isLoading"
+          @click="handleRegisterClick"
+        >
+          Register
+        </n-button>
+        <n-button>
+          <RouterLink to="/account/login"> Login</RouterLink>
+        </n-button>
+      </n-form-item>
+    </n-form>
+  </n-card>
 </template>

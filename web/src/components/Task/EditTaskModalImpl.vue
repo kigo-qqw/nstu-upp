@@ -105,9 +105,9 @@ const handleSaveClick = async (e: MouseEvent) => {
 <template>
   <template v-if="model && taskBoard">
     <n-form ref="formRef" :model="model" :rules="rules" size="medium">
-      {{ model }}
+<!--      {{ model }}-->
 
-      <div>Status</div>
+<!--      <div>Status</div>-->
 
       <n-form-item label="Title">
         <n-input v-model:value="model.title" />
